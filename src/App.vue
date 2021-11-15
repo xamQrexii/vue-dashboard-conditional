@@ -1,26 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <login
+    v-if="currentView === 'login' && !isLoggedIn"
+    @handle-login="handleLogin"
+  ></login>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Login from "./views/Login.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    Login,
+  },
+  data() {
+    return {
+      isLoggedIn: false,
+      users: [],
+      currentUser: null,
+      currentView: "login",
+    };
+  },
+  methods: {
+    handleLogin(e, email, password) {
+      e.preventDefault();
+      if (!email || !password) {
+        alert("please provide username and password");
+      }
+    },
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style scoped></style>
