@@ -95,8 +95,14 @@ export default {
   },
 
   methods: {
-    submit(e) {
+    async submit(e) {
       e.preventDefault();
+      const response = await fetch(
+        "https://www.random.org/integers/?num=1&min=-1000&max=1000&col=1&base=10&format=plain&rnd=new"
+      );
+      const id = await response.json();
+      this.user.id = id;
+
       this.$emit("handleRegister", this.user);
       this.user = { firstName: "", lastName: "", email: "", password: "" };
     },

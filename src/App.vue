@@ -9,7 +9,13 @@
     @handle-register="handleRegister"
     @change-view="changeView"
   ></register>
-  <dashboard v-else-if="currentView === 'dashboard' && isLoggedIn"></dashboard>
+  <dashboard
+    v-else-if="currentView === 'dashboard' && isLoggedIn"
+    :users="users"
+    :current-user="currentUser"
+    @logout="logout"
+    @set-current-user="setCurrentUser"
+  ></dashboard>
 </template>
 
 <script>
@@ -38,14 +44,14 @@ export default {
         {
           id: "002",
           firstName: "muhammad",
-          lastName: "ismail ghani",
+          lastName: "ismail",
           email: "ismail@xyz.com",
           password: "123456",
         },
         {
           id: "003",
           firstName: "ahsan",
-          lastNamne: "tariq",
+          lastName: "tariq",
           email: "ahsan@xyz.com",
           password: "123456",
         },
@@ -58,8 +64,17 @@ export default {
     changeView(name) {
       this.currentView = name;
     },
+    setCurrentUser(user) {
+      this.currentUser = user;
+    },
     findUser({ email }) {
       return this.users.find((user) => user.email === email);
+    },
+    logout() {
+      console.log("logout is working");
+      this.isLoggedIn = false;
+      this.changeView("login");
+      this.currentUser = null;
     },
     handleLogin(user) {
       const foundUser = this.findUser(user);
