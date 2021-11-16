@@ -11,9 +11,21 @@
     <!-- form -->
     <div class="flex flex-1 justify-center items-center bg-gray-200">
       <div class="bg-white shadow-2xl rounded p-5 w-1/2">
-        <span class="text-sm text-gray-400 block">Welcome back</span>
-        <h1 class="text-2xl font-bold">Login to your account</h1>
+        <span class="text-sm text-gray-400 block">Keep doing</span>
+        <h1 class="text-2xl font-bold">Register your account</h1>
         <form class="mt-5" @submit="submit">
+          <custom-input
+            type="text"
+            placeholder="First name"
+            v-model.trim="user.firstName"
+            :required="true"
+          ></custom-input>
+          <custom-input
+            type="text"
+            placeholder="Last name"
+            v-model.trim="user.lastName"
+            :required="true"
+          ></custom-input>
           <custom-input
             type="email"
             placeholder="Email"
@@ -41,11 +53,11 @@
               duration-300
             "
           >
-            Login
+            Register
           </button>
         </form>
         <p class="text-sm font-normal mt-5">
-          Don't have an account?
+          Go to
           <span
             class="
               text-sm text-blue-500
@@ -54,8 +66,8 @@
               transition-all
               duration-300
             "
-            @click="this.$emit('changeView', 'register')"
-            >Sign up now!</span
+            @click="this.$emit('changeView', 'login')"
+            >Login page!</span
           >
         </p>
       </div>
@@ -67,31 +79,36 @@
 import CustomInput from "../components/CustomInput.vue";
 
 export default {
-  name: "Login",
+  name: "Register",
   components: {
     CustomInput,
   },
   data() {
     return {
       user: {
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
       },
     };
   },
+
   methods: {
     submit(e) {
       e.preventDefault();
-      this.$emit("handleLogin", this.user);
+      this.$emit("handleRegister", this.user);
+      this.user = { firstName: "", lastName: "", email: "", password: "" };
     },
   },
-  emits: ["handleLogin", "changeView"],
+
+  emits: ["handleRegister", "changeView"],
 };
 </script>
 
-<style scoped>
+<style>
 .bg-img {
-  background-image: url("../assets/images/login-page.jpg");
+  background-image: url("../assets/images/register-page.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
